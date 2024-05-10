@@ -22,7 +22,6 @@ class WelcomeCog(commands.Cog):
                   "you"
 
         )
-
         # Fetch avatar URL from member.avatar
         avatar_url = member.avatar.url if member.avatar else member.default_avatar.url
         welcome_embed.set_thumbnail(url=avatar_url)

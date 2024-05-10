@@ -4,8 +4,11 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
+from cogs.PersistentButtonViews.ClassMenu_Picker import SelectMenu
 from cogs.PersistentButtonViews.Support_TicketSystem import SupportView
-from cogs.SlashCommands.classMenu_Dropdown import SelectMenu
+from cogs.PersistentButtonViews.Ship_Embed_Application import ShipButtons
+from cogs.PersistentButtonViews.Vehicle_Embed_Application import VehicleButtons
+
 
 load_dotenv()
 
@@ -51,7 +54,8 @@ class Client(commands.Bot):
     async def setup_hook(self):
         self.add_view(SupportView())
         self.add_view(SelectMenu())
-
+        self.add_view(ShipButtons())
+        self.add_view(VehicleButtons())
 
     async def load_cogs(self, path="cogs"):
         for filename in os.listdir(path):
@@ -67,7 +71,7 @@ if __name__ == "__main__":
     async def main():
         bot = Client()
         await bot.load_cogs()
-        await bot.start("MTExMzE0MzI4NTc1ODgyMDQ4Mg.GHHrYe.gxDZ8hF04xSabfmCPqYCkSYUoFHO1FVqMEPSaE")
+        await bot.start("MTExOTc5MjkzNzA5ODgxNzU5Nw.GK8MxY.geXs8815gEs_64j22f2fAWwfuvE76Jx5frg9Ns")
 
 
     asyncio.run(main())

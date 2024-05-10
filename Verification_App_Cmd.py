@@ -1,3 +1,4 @@
+"""
 import discord
 from discord.ext import commands
 from discord import app_commands
@@ -28,3 +29,4 @@ class YourCogName(commands.Cog):
 
 async def setup(bot):
     await bot.add_cog(YourCogName(bot), guilds=[discord.Object(id="1041205088657616898")])
+"""

@@ -133,7 +133,6 @@ class Utility(commands.Cog):
                 await interaction.response.send_message("You don't have the required permissions to use this command.",
                                                         ephemeral=True)
                 return
-
             await interaction.response.defer(ephemeral=True)  # Defer the initial response
 
             if message is not None:
