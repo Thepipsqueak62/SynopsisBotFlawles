@@ -19,7 +19,9 @@ class WelcomeCog(commands.Cog):
         welcome_embed.add_field(
             name="Verification Process",
             value="To complete your verification, Match Server Name to In-game Name and Wait for an Admin to Contact "
-                  "you"
+                  "you. Once you're Verified Please head over to "
+                  "https://discord.com/channels/1041205088657616898/1236511626681778176 and Fill out the Guild "
+                  "Applications"
 
         )
         # Fetch avatar URL from member.avatar

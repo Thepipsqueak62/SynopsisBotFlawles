@@ -28,24 +28,42 @@ class databaseexport(commands.Cog):
         tables = cursor.fetchall()
         tables = [table[0] for table in tables if table[0] != 'sqlite_sequence']  # Exclude sqlite_sequence table
 
+        # Function to get username from ID
+        async def get_username(user_id):
+            user = self.bot.get_user(user_id)
+            if user is None:
+                try:
+                    user = await self.bot.fetch_user(user_id)
+                except discord.NotFound:
+                    return "Unknown User"
+            return user.name
+
         # Query and store data for each table
         for table in tables:
             cursor.execute(f"SELECT * FROM {table}")
             users = cursor.fetchall()
-            data[table] = [user[0] for user in users]
+            user_ids = [user[0] for user in users]
+
+            user_data = []
+            for user_id in user_ids:
+                username = await get_username(user_id)
+                user_data.append({"id": user_id, "username": username})
+
+            data[table] = user_data
 
         # Export data to JSON or CSV
         if file_format == 'json':
             content = json.dumps(data, indent=4)
-            file = discord.File(filename="userdata.json", fp=io.StringIO(content))
+            file = discord.File(fp=io.StringIO(content), filename="userdata.json")
         elif file_format == 'csv':
             content = io.StringIO()
             writer = csv.writer(content)
             for table, users in data.items():
+                writer.writerow([table, "ID", "Username"])  # CSV header
                 for user in users:
-                    writer.writerow([table, user])
+                    writer.writerow([table, user["id"], user["username"]])
             content.seek(0)
-            file = discord.File(filename="userdata.csv", fp=content)
+            file = discord.File(fp=content, filename="userdata.csv")
 
         # Send the file
         await ctx.send("Data exported:", file=file)
